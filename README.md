@@ -1,4 +1,4 @@
-# DAMA EM C
+# DAMA EM C V0.1
 ## 🎮 Jogo de Damas em C (Terminal)
 
 Projeto desenvolvido em linguagem C que simula um tabuleiro de damas no terminal.
