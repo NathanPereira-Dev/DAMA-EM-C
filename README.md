@@ -1,50 +1,60 @@
-# DAMA EM C V0.1
-## 🎮 Jogo de Damas em C (Terminal)
+# 🟦 DAMA EM C
 
-Projeto desenvolvido em linguagem C que simula um tabuleiro de damas no terminal.
-O programa inicializa automaticamente as peças pretas e brancas, exibe o tabuleiro atualizado e permite ao jogador movimentar as peças brancas com validação básica de coordenadas e movimentos diagonais.
+Um jogo de **Damas tradicional** implementado em **C**, desenvolvido como projeto de estudo para aprender lógica, estruturas de controle e manipulação de matrizes.
 
-## 📌 Funcionalidades
+---
 
-Inicialização automática do tabuleiro (8x8)
+## 🎯 Sobre o Projeto
 
-Posicionamento padrão das peças pretas e brancas
+Este projeto implementa um jogo de damas clássico no console, com:
 
-Exibição do tabuleiro no terminal
+✔ Tabuleiro 8x8  
+✔ Posicionamento inicial correto das peças  
+✔ Turnos alternados entre as peças **Brancas (B)** e **Pretas (P)**  
+✔ Movimentos diagonais válidos  
+✔ Contagem de peças e detecção de vitória  
+✔ Validação de entradas do jogador
 
-Entrada de coordenadas para movimentação das peças
+O foco principal é reforçar lógica de programação, uso de funções, estruturas condicionais e loops.
 
-Validação simples de jogadas (movimento diagonal e casa livre)
+---
 
-## 🛠️ Tecnologias utilizadas
+## 🧠 Funcionalidades Implementadas
 
-Linguagem C
+✅ Inicialização do tabuleiro  
+✅ Impressão do tabuleiro no terminal  
+✅ Função de mover peças  
+✅ Alternância de turno entre os jogadores  
+✅ Verificação de movimento válido (diagonal comum)  
+✅ Contagem de peças para detectar vencedor  
+*(desenvolvimento futuro)*
+❌  Captura de peças  
+❌ Promoção de dama  
+❌ Jogador vs Computador
 
-Biblioteca padrão (stdio.h, stdlib.h, locale.h)
+---
 
-## ▶️ Como compilar e executar
-Compilar:
-gcc damas.c -o damas
+## 📌 Regras do jogo no programa
 
-Executar:
+👉 O jogador informa:
+
+[Coluna da peça] [Linha da peça]
+[Coluna de destino] [Linha de destino]
+
+
+▪ As peças **B (brancas)** se movem para frente (linha decrescente)  
+▪ As peças **P (pretas)** se movem para frente (linha crescente)  
+▪ Somente um passo diagonal simples é permitido por vez  
+▪ Movimento válido apenas se o destino estiver vazio
+
+---
+
+## ▶ Como Compilar e Executar
+
+Para compilar:
+
+```bash
+gcc -o damas damas.c
+
+Para executar:
 ./damas
-
-## 📚 Objetivo do projeto
-
-Este projeto foi desenvolvido com fins educacionais, para praticar:
-
-Matrizes bidimensionais em C
-
-Funções e organização de código
-
-Entrada e saída de dados
-
-Lógica básica de jogos no terminal
-
-## ⚠️ Observações
-
-Atualmente apenas o jogador com peças brancas pode jogar.
-
-O jogo ainda não possui regras completas (capturas, múltiplos turnos, vitória etc.).
-
-Projeto em desenvolvimento.
