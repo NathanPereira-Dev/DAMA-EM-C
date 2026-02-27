@@ -26,8 +26,10 @@ O foco principal é reforçar lógica de programação, uso de funções, estrut
 ✅ Função de mover peças  
 ✅ Alternância de turno entre os jogadores  
 ✅ Verificação de movimento válido (diagonal comum)  
-✅ Contagem de peças para detectar vencedor  
+✅ Contagem de peças para detectar vencedor
+
 *(desenvolvimento futuro)*
+
 ❌  Captura de peças  
 ❌ Promoção de dama  
 ❌ Jogador vs Computador
@@ -55,6 +57,9 @@ Para compilar:
 
 ```bash
 gcc -o damas damas.c
+```
 
 Para executar:
+```bash
 ./damas
+```
