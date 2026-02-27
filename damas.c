@@ -1,40 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <time.h>
 
 #define ALTURA 8
 #define COMPRIMENTO 8
 
 void printartabuleiroatual();
+void inicializartabuleiro();
 void inicializarpretas();
 void inicializarbrancas();
-void suavez();
+void contarpecas();
+void jogarbrancas();
 void verificacao();
 void moverpeca();
+void jogarPretas();
+void verificarvencedor();
 
 char tabuleiro[COMPRIMENTO][ALTURA];
+char vezdejogar;
 
 int origemlinha;
 int origemcoluna;
 int destinolinha;
 int destinocoluna;
+int sorteio;
+int qtdbrancas = 0;
+int qtdpretas = 0;
 
-int main() {
-    setlocale(LC_ALL, "");
+    // ETAPA DE CONTRUÇÃO DO TABULEIRO
+
+void inicializartabuleiro() {
     for (int i = 0; i < COMPRIMENTO; i++) {
         for(int j = 0; j < ALTURA; j++) { 
             tabuleiro[i][j] = '.';
         }
     }
-    printf("Voce eh as BRANCAS 'B'!\n\n");
-
-    inicializarpretas();
-    inicializarbrancas();
-    printartabuleiroatual();
-
-    suavez();
-    verificacao();
-    return 0;
 }
 
 void inicializarpretas () {
@@ -75,51 +76,156 @@ void printartabuleiroatual () {
     printf("\n");
 }
 
-void suavez(){
+    // CONTAGEM DE PEÇAS
 
-    printf("Sua vez de jogar!!!\n");
+void contarpecas() {
+
+    qtdbrancas = 0;
+    qtdpretas = 0;
+
+    for (int i = 0; i < COMPRIMENTO; i++) {
+        for(int j = 0; j < ALTURA; j++) { 
+            if (tabuleiro[i][j] == 'B'){
+                qtdbrancas++;
+            } else if (tabuleiro[i][j] == 'P'){
+                qtdpretas++;
+            }     
+        }
+    }
+}
+
+void verificarvencedor() {
+    if (qtdbrancas == 0) {
+        printf("As pretas ganharam!!!");
+    } else if (qtdpretas == 0) {
+        printf("As brancas ganharam!!!");
+    }
+
+    qtdbrancas = 0;
+    qtdpretas = 0;
+    
+}
+
+void jogarbrancas() {
+
     printf("Escreva as coordenadas da peca que deseja mover: [COLUNA] [LINHA] ");
     scanf("%d %d", &origemcoluna, &origemlinha);
 
     if (origemlinha < 1 || origemlinha > 8 || origemcoluna < 1 || origemcoluna > 8) {
         printf("Corrdenadas incorretas!!\n");
-        suavez();
+        jogarbrancas();
     } else {
-        if (tabuleiro[origemlinha-1][origemcoluna-1] != '.') {
+        if (tabuleiro[origemlinha-1][origemcoluna-1] == 'B') {
             printf("Escreva as coordenadas para onde a peca sera movida: [COLUNA] [LINHA] ");
-            scanf("%d %d", &destinocoluna, &destinolinha);    
+            scanf("%d %d", &destinocoluna, &destinolinha);
+            verificacao();   
         } else {
-            printf("Corrdenadas incorretas!!\n");
-            suavez();
+            printf("Coordenadas incorretas!!\n");
+            jogarbrancas();
         }
     }
-
 }
 
-void verificacao(){
+void jogarpretas() {
+
+    printf("Escreva as coordenadas da peca que deseja mover: [COLUNA] [LINHA] ");
+    scanf("%d %d", &origemcoluna, &origemlinha);
+
+    if (origemlinha < 1 || origemlinha > 8 || origemcoluna < 1 || origemcoluna > 8) {
+        printf("Corrdenadas incorretas!!\n");
+        jogarpretas();
+    } else {
+        if (tabuleiro[origemlinha-1][origemcoluna-1] == 'P') {
+            printf("Escreva as coordenadas para onde a peca sera movida: [COLUNA] [LINHA] ");
+            scanf("%d %d", &destinocoluna, &destinolinha);
+            verificacao();   
+        } else {
+            printf("Coordenadas incorretas!!\n");
+            jogarpretas();
+        }
+    }
+}
+
+void verificacao() {
     int dLinha = destinolinha - origemlinha;
     int dColuna = destinocoluna - origemcoluna;
 
-    if (tabuleiro[origemlinha-1][origemcoluna-1] != 'B') {
+    if ((destinolinha < 1) || (destinolinha > 8) || (destinocoluna < 1) || (destinocoluna > 8)) {
+        printf("Destino fora do tabuleiro!\n");
+        if (vezdejogar == 'B'){
+            jogarbrancas();
+        } else {
+            jogarpretas();
+        }
+    }
+
+    if (tabuleiro[origemlinha-1][origemcoluna-1] != vezdejogar){
         printf("Coordenadas incorretas!!! Voce escolheu uma peça que não eh sua... \n");
     } else {
-        if (dLinha == -1 && (dColuna == 1 || dColuna == -1)) {
+        if ((vezdejogar == 'B' && dLinha == -1 && (dColuna == 1 || dColuna == -1)) || (vezdejogar == 'P' && dLinha == 1 && (dColuna == 1 || dColuna == -1))) {
+
             if (tabuleiro[destinolinha-1][destinocoluna-1] == '.') {
                 moverpeca();
             } else {
                 printf("Casa ocupada!");
-            }
-            
+                if (vezdejogar == 'B') {
+                jogarbrancas();
+                } else {
+                jogarpretas();
+                }
+            } 
         } else {
             printf("Movimento invalido!!! Voce so pode mover as pecas na diagonal!!!\n");
-            suavez();
+            if (vezdejogar == 'B') {
+                jogarbrancas();
+            } else {
+                jogarpretas();
+            }
         }
     }
 }
 
-void moverpeca(){
+void moverpeca() {
 
     tabuleiro[destinolinha-1][destinocoluna-1] = tabuleiro[origemlinha-1][origemcoluna-1];
-    tabuleiro[origemlinha-1][origemcoluna-1]  = '.';    
+    tabuleiro[origemlinha-1][origemcoluna-1]  = '.';  
+    
+    if (vezdejogar == 'P'){
+        vezdejogar = 'B';
+    } else if (vezdejogar == 'B'){
+        vezdejogar = 'P';
+    }
+
     printartabuleiroatual();
+}
+
+int main() {
+
+    vezdejogar = 'B';
+
+    // ETAPA DE CONTRUÇÃO DO TABULEIRO
+
+    inicializartabuleiro();
+    inicializarpretas();
+    inicializarbrancas();
+    printartabuleiroatual();
+
+    while (1) {
+
+        contarpecas();
+
+        if (qtdbrancas == 0 || qtdpretas == 0) {
+            verificarvencedor();
+            break;
+        }
+
+        if (vezdejogar == 'B'){
+            jogarbrancas();
+        } else if (vezdejogar == 'P') {
+            jogarpretas();
+        }
+
+        verificarvencedor();
+    }
+    return 0;
 }
